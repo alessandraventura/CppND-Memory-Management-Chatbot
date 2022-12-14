@@ -43,6 +43,25 @@ ChatBot::ChatBot(const ChatBot &source) {
   *_image = *source._image;
 }
 
+// move constructor
+ChatBot::ChatBot(ChatBot &&source) {
+  std::cout << "ChatBot Move Constructor" << std::endl;
+
+  // copying data
+  _chatLogic = source._chatLogic;
+  _rootNode = source._rootNode;
+  _currentNode = source._currentNode;
+
+  // deep copy of owned data
+  _image = source._image;
+  *_image = *source._image;
+
+  // deallocate memory from source
+  source._chatLogic = nullptr;
+  source._rootNode = nullptr;
+  source._currentNode = nullptr;
+}
+
 // operator = overload
 ChatBot ChatBot::operator=(const ChatBot &source) {
   // copying data
