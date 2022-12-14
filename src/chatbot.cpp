@@ -43,6 +43,18 @@ ChatBot::ChatBot(const ChatBot &source) {
   *_image = *source._image;
 }
 
+// operator = overload
+ChatBot ChatBot::operator=(const ChatBot &source) {
+  // copying data
+  _chatLogic = source._chatLogic;
+  _rootNode = source._rootNode;
+  _currentNode = source._currentNode;
+
+  // deep copy of owned data
+  _image = source._image;
+  *_image = *source._image;
+}
+
 ChatBot::~ChatBot() {
   std::cout << "ChatBot Destructor" << std::endl;
 
