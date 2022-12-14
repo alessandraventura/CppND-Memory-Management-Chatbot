@@ -29,21 +29,18 @@ ChatBot::ChatBot(std::string filename) {
   _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
-// copy constructor WITH exclusive ownership
-ChatBot::ChatBot(ChatBot &source) {
+// copy constructor
+ChatBot::ChatBot(const ChatBot &source) {
   std::cout << "ChatBot Copy Constructor" << std::endl;
 
-  // copying source data
+  // copying data
   _chatLogic = source._chatLogic;
   _rootNode = source._rootNode;
-  _image = source._image;
   _currentNode = source._currentNode;
 
-  // deallocating source data: exclusive ownership
-  source._chatLogic = nullptr;
-  source._rootNode = nullptr;
-  source._image = nullptr;
-  source._currentNode = nullptr;
+  // deep copy of owned data
+  _image = source._image;
+  *_image = *source._image;
 }
 
 ChatBot::~ChatBot() {

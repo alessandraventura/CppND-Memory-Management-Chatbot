@@ -30,7 +30,7 @@ class ChatBot {
   //// STUDENT CODE
   ////
 
-  ChatBot(ChatBot &source);  // copy constructor WITH exclusive ownership
+  ChatBot(const ChatBot &source);
 
   ////
   //// EOF STUDENT CODE
