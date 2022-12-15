@@ -72,6 +72,26 @@ ChatBot ChatBot::operator=(const ChatBot &source) {
   // deep copy of owned data
   _image = source._image;
   *_image = *source._image;
+
+  return *this;
+}
+// operator = overload
+ChatBot ChatBot::operator=(ChatBot &&source) {
+  // copying data
+  _chatLogic = source._chatLogic;
+  _rootNode = source._rootNode;
+  _currentNode = source._currentNode;
+
+  // deep copy of owned data
+  _image = source._image;
+  *_image = *source._image;
+
+  // deallocate memory from source
+  source._chatLogic = nullptr;
+  source._rootNode = nullptr;
+  source._currentNode = nullptr;
+
+  return *this;
 }
 
 ChatBot::~ChatBot() {
