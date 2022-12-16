@@ -64,6 +64,8 @@ ChatBot::ChatBot(ChatBot &&source) {
 
 // operator = overload
 ChatBot ChatBot::operator=(const ChatBot &source) {
+  std::cout << "ChatBot Copy Operator" << std::endl;
+
   // copying data
   _chatLogic = source._chatLogic;
   _rootNode = source._rootNode;
@@ -77,6 +79,8 @@ ChatBot ChatBot::operator=(const ChatBot &source) {
 }
 // operator = overload
 ChatBot ChatBot::operator=(ChatBot &&source) {
+  std::cout << "ChatBot Move Assignment Operator" << std::endl;
+
   // copying data
   _chatLogic = source._chatLogic;
   _rootNode = source._rootNode;
