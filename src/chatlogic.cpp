@@ -17,7 +17,7 @@ ChatLogic::ChatLogic() {
   ////
 
   // create instance of chatbot
-  _chatBot = new ChatBot("../images/chatbot.png");
+  _chatBot = std::make_unique<ChatBot>("../images/chatbot.png");
 
   // add pointer to chatlogic so that chatbot answers can be passed on to the
   // GUI
@@ -30,9 +30,6 @@ ChatLogic::ChatLogic() {
 ChatLogic::~ChatLogic() {
   //// STUDENT CODE
   ////
-
-  // delete chatbot instance
-  delete _chatBot;
 
   ////
   //// EOF STUDENT CODE
@@ -215,8 +212,12 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename) {
 
   // add chatbot to graph root node
   _chatBot->SetRootNode(rootNode);
-  rootNode->MoveChatbotHere(_chatBot);
+  rootNode->MoveChatbotHere(std::move(*_chatBot));
 
+  ChatBot chatbot("../images/chatbot.png");
+  chatbot.SetChatLogicHandle(this);
+  chatbot.SetRootNode(rootNode);
+  rootNode->MoveChatbotHere(std::move(chatbot));
   ////
   //// EOF STUDENT CODE
 }
@@ -225,7 +226,10 @@ void ChatLogic::SetPanelDialogHandle(ChatBotPanelDialog *panelDialog) {
   _panelDialog = panelDialog;
 }
 
-void ChatLogic::SetChatbotHandle(ChatBot *chatbot) { _chatBot = chatbot; }
+void ChatLogic::SetChatbotHandle(ChatBot *chatbot) {
+  _chatBot.release();
+  _chatBot.reset(chatbot);
+}
 
 void ChatLogic::SendMessageToChatbot(std::string message) {
   _chatBot->ReceiveMessageFromUser(message);
