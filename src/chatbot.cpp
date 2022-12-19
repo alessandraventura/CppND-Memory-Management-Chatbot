@@ -39,8 +39,7 @@ ChatBot::ChatBot(const ChatBot &source) {
   _currentNode = source._currentNode;
 
   // deep copy of owned data
-  _image = source._image;
-  *_image = *source._image;
+  _image = new wxBitmap(*source._image);
 }
 
 // move constructor
@@ -53,8 +52,7 @@ ChatBot::ChatBot(ChatBot &&source) {
   _currentNode = source._currentNode;
 
   // deep copy of owned data
-  _image = source._image;
-  *_image = *source._image;
+  _image = new wxBitmap(*source._image);
 
   // deallocate memory from source
   source._chatLogic = nullptr;
@@ -72,8 +70,7 @@ ChatBot ChatBot::operator=(const ChatBot &source) {
   _currentNode = source._currentNode;
 
   // deep copy of owned data
-  _image = source._image;
-  *_image = *source._image;
+  _image = new wxBitmap(*source._image);
 
   return *this;
 }
@@ -87,8 +84,7 @@ ChatBot ChatBot::operator=(ChatBot &&source) {
   _currentNode = source._currentNode;
 
   // deep copy of owned data
-  _image = source._image;
-  *_image = *source._image;
+  _image = new wxBitmap(*source._image);
 
   // deallocate memory from source
   source._chatLogic = nullptr;
