@@ -52,8 +52,7 @@ ChatBot::ChatBot(ChatBot &&source) {
   _currentNode = source._currentNode;
 
   // deep copy of owned data
-  _image = source._image;
-  source._image = NULL;
+  _image = new wxBitmap(*source._image);
 
   // deallocate memory from source
   source._chatLogic = nullptr;
@@ -85,8 +84,8 @@ ChatBot ChatBot::operator=(ChatBot &&source) {
   _currentNode = source._currentNode;
 
   // deep copy of owned data
-  _image = source._image;
-  source._image = NULL;
+  _image = new wxBitmap(*source._image);
+
   // deallocate memory from source
   source._chatLogic = nullptr;
   source._rootNode = nullptr;
