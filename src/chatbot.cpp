@@ -40,6 +40,8 @@ ChatBot::ChatBot(const ChatBot &source) {
 
   // deep copy of owned data
   _image = new wxBitmap(*source._image);
+
+  _chatLogic->SetChatbotHandle(this);
 }
 
 // move constructor
@@ -52,9 +54,12 @@ ChatBot::ChatBot(ChatBot &&source) {
   _currentNode = source._currentNode;
 
   // deep copy of owned data
-  _image = new wxBitmap(*source._image);
+  _image = source._image;
+
+  _chatLogic->SetChatbotHandle(this);
 
   // deallocate memory from source
+  source._image = NULL;
   source._chatLogic = nullptr;
   source._rootNode = nullptr;
   source._currentNode = nullptr;
@@ -70,10 +75,17 @@ ChatBot ChatBot::operator=(const ChatBot &source) {
   _currentNode = source._currentNode;
 
   // deep copy of owned data
+  if (_image != NULL) {
+    delete _image;
+    _image = NULL;
+  }
   _image = new wxBitmap(*source._image);
+
+  _chatLogic->SetChatbotHandle(this);
 
   return *this;
 }
+
 // operator = overload
 ChatBot ChatBot::operator=(ChatBot &&source) {
   std::cout << "ChatBot Move Assignment Operator" << std::endl;
@@ -84,9 +96,12 @@ ChatBot ChatBot::operator=(ChatBot &&source) {
   _currentNode = source._currentNode;
 
   // deep copy of owned data
-  _image = new wxBitmap(*source._image);
+  _image = source._image;
+
+  _chatLogic->SetChatbotHandle(this);
 
   // deallocate memory from source
+  source._image = NULL;
   source._chatLogic = nullptr;
   source._rootNode = nullptr;
   source._currentNode = nullptr;
