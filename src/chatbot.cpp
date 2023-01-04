@@ -29,8 +29,8 @@ ChatBot::ChatBot(std::string filename) {
   _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
-ChatBot::ChatBot(const ChatBot &&source)  // copy constructor
-{
+// Copy Constructor
+ChatBot::ChatBot(const ChatBot &&source) {
   std::cout << "ChatBot Copy Constructor" << std::endl;
   _image = new wxBitmap();
   *_image = *source._image;
@@ -40,8 +40,10 @@ ChatBot::ChatBot(const ChatBot &&source)  // copy constructor
   _chatLogic->SetChatbotHandle(this);
 }
 
-ChatBot &ChatBot::operator=(const ChatBot &source)  // copy assignment operator
-{
+// Copy Assignment Operator
+ChatBot &ChatBot::operator=(const ChatBot &source) {
+  std::cout << "ChatBot Copy Assignment Operator" << std::endl;
+
   if (this == &source) {
     return *this;
   }
@@ -52,11 +54,12 @@ ChatBot &ChatBot::operator=(const ChatBot &source)  // copy assignment operator
   _chatLogic = source._chatLogic;
   _chatLogic->SetChatbotHandle(this);
   return *this;
-  std::cout << "ChatBot Copy Assignment Operator" << std::endl;
 }
 
-ChatBot::ChatBot(ChatBot &&source)  // move constructor
-{
+// Move Constructor
+ChatBot::ChatBot(ChatBot &&source) {
+  std::cout << "ChatBot Move Constructor" << std::endl;
+
   _image = source._image;
   _currentNode = source._currentNode;
   _rootNode = source._rootNode;
@@ -66,11 +69,10 @@ ChatBot::ChatBot(ChatBot &&source)  // move constructor
   source._currentNode = nullptr;
   source._rootNode = nullptr;
   source._chatLogic = nullptr;
-  std::cout << "ChatBot Move Constructor" << std::endl;
 }
 
-ChatBot &ChatBot::operator=(ChatBot &&source)  // move assignment operator
-{
+// Move Assignment Operator
+ChatBot &ChatBot::operator=(ChatBot &&source) {
   std::cout << "ChatBot Move Assignment operator" << std::endl;
   if (this == &source) {
     return *this;
@@ -97,12 +99,6 @@ ChatBot::~ChatBot() {
     _image = NULL;
   }
 }
-
-//// STUDENT CODE
-////
-
-////
-//// EOF STUDENT CODE
 
 void ChatBot::ReceiveMessageFromUser(std::string message) {
   // loop over all edges and keywords and compute Levenshtein distance to query
